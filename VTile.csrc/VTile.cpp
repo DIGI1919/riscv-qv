@@ -3,7 +3,6 @@
 
 #include "VTile.h"
 #include "VTile__Syms.h"
-#include "verilated_vcd_c.h"
 
 //============================================================
 // Constructors
@@ -11,26 +10,26 @@
 VTile::VTile(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new VTile__Syms(contextp(), _vcname__, this)}
-    , io_nasti_b_valid{vlSymsp->TOP.io_nasti_b_valid}
-    , io_nasti_w_bits_last{vlSymsp->TOP.io_nasti_w_bits_last}
-    , reset{vlSymsp->TOP.reset}
-    , io_nasti_r_bits_last{vlSymsp->TOP.io_nasti_r_bits_last}
-    , io_host_fromhost_valid{vlSymsp->TOP.io_host_fromhost_valid}
-    , io_host_fromhost_bits{vlSymsp->TOP.io_host_fromhost_bits}
-    , io_nasti_ar_valid{vlSymsp->TOP.io_nasti_ar_valid}
-    , io_nasti_ar_ready{vlSymsp->TOP.io_nasti_ar_ready}
-    , io_nasti_aw_valid{vlSymsp->TOP.io_nasti_aw_valid}
-    , io_nasti_ar_bits_addr{vlSymsp->TOP.io_nasti_ar_bits_addr}
-    , io_host_tohost{vlSymsp->TOP.io_host_tohost}
-    , io_nasti_b_ready{vlSymsp->TOP.io_nasti_b_ready}
-    , io_nasti_r_ready{vlSymsp->TOP.io_nasti_r_ready}
+    , io_nasti_aw_bits_addr{vlSymsp->TOP.io_nasti_aw_bits_addr}
     , io_nasti_aw_ready{vlSymsp->TOP.io_nasti_aw_ready}
     , io_nasti_w_ready{vlSymsp->TOP.io_nasti_w_ready}
     , io_nasti_w_valid{vlSymsp->TOP.io_nasti_w_valid}
     , io_nasti_w_bits_data{vlSymsp->TOP.io_nasti_w_bits_data}
-    , io_nasti_aw_bits_addr{vlSymsp->TOP.io_nasti_aw_bits_addr}
+    , io_nasti_r_bits_last{vlSymsp->TOP.io_nasti_r_bits_last}
+    , io_host_fromhost_valid{vlSymsp->TOP.io_host_fromhost_valid}
+    , io_host_fromhost_bits{vlSymsp->TOP.io_host_fromhost_bits}
+    , io_nasti_b_ready{vlSymsp->TOP.io_nasti_b_ready}
+    , io_nasti_r_ready{vlSymsp->TOP.io_nasti_r_ready}
     , io_nasti_r_bits_data{vlSymsp->TOP.io_nasti_r_bits_data}
+    , io_nasti_b_valid{vlSymsp->TOP.io_nasti_b_valid}
+    , io_nasti_w_bits_last{vlSymsp->TOP.io_nasti_w_bits_last}
+    , reset{vlSymsp->TOP.reset}
     , io_nasti_r_valid{vlSymsp->TOP.io_nasti_r_valid}
+    , io_nasti_ar_valid{vlSymsp->TOP.io_nasti_ar_valid}
+    , io_nasti_ar_bits_addr{vlSymsp->TOP.io_nasti_ar_bits_addr}
+    , io_host_tohost{vlSymsp->TOP.io_host_tohost}
+    , io_nasti_ar_ready{vlSymsp->TOP.io_nasti_ar_ready}
+    , io_nasti_aw_valid{vlSymsp->TOP.io_nasti_aw_valid}
     , clock{vlSymsp->TOP.clock}
     , io_nasti_b_bits_id{vlSymsp->TOP.io_nasti_b_bits_id}
     , io_nasti_b_bits_resp{vlSymsp->TOP.io_nasti_b_bits_resp}
@@ -88,7 +87,6 @@ void VTile::eval_step() {
     // Debug assertions
     VTile___024root___eval_debug_assertions(&(vlSymsp->TOP));
 #endif  // VL_DEBUG
-    vlSymsp->__Vm_activity = true;
     if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) {
         vlSymsp->__Vm_didInit = true;
         VL_DEBUG_IF(VL_DBG_MSGF("+ Initial\n"););
@@ -133,39 +131,3 @@ VL_ATTR_COLD void VTile::final() {
 const char* VTile::hierName() const { return vlSymsp->name(); }
 const char* VTile::modelName() const { return "VTile"; }
 unsigned VTile::threads() const { return 16; }
-std::unique_ptr<VerilatedTraceConfig> VTile::traceConfig() const {
-    return std::unique_ptr<VerilatedTraceConfig>{new VerilatedTraceConfig{true, false, false}};
-};
-
-//============================================================
-// Trace configuration
-
-void VTile___024root__trace_init_top(VTile___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD static void trace_init(void* voidSelf, VerilatedVcd* tracep, uint32_t code) {
-    // Callback from tracep->open()
-    VTile___024root* const __restrict vlSelf VL_ATTR_UNUSED = static_cast<VTile___024root*>(voidSelf);
-    VTile__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    if (!vlSymsp->_vm_contextp__->calcUnusedSigs()) {
-        VL_FATAL_MT(__FILE__, __LINE__, __FILE__,
-            "Turning on wave traces requires Verilated::traceEverOn(true) call before time 0.");
-    }
-    vlSymsp->__Vm_baseCode = code;
-    tracep->scopeEscape(' ');
-    tracep->pushNamePrefix(std::string{vlSymsp->name()} + ' ');
-    VTile___024root__trace_init_top(vlSelf, tracep);
-    tracep->popNamePrefix();
-    tracep->scopeEscape('.');
-}
-
-VL_ATTR_COLD void VTile___024root__trace_register(VTile___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD void VTile::trace(VerilatedVcdC* tfp, int levels, int options) {
-    if (tfp->isOpen()) {
-        vl_fatal(__FILE__, __LINE__, __FILE__,"'VTile::trace()' shall not be called after 'VerilatedVcdC::open()'.");
-    }
-    if (false && levels && options) {}  // Prevent unused
-    tfp->spTrace()->addModel(this);
-    tfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP));
-    VTile___024root__trace_register(&(vlSymsp->TOP), tfp->spTrace());
-}

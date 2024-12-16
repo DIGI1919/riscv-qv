@@ -4,7 +4,7 @@
 # Execute this makefile from the object directory:
 #    make -f VTile.mk
 
-default: /home/digi/code/scala/1215merge/merge/QVTile
+default: /home/digi/code/c/riscv-qv/QVTile
 
 ### Constants...
 # Perl executable (from $PERL)
@@ -35,7 +35,7 @@ VM_PREFIX = VTile
 VM_MODPREFIX = VTile
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
-	-std=c++11 -Wall -Wno-unused-variable -include /home/digi/code/scala/1215merge/merge/VTile.csrc/VTile.h \
+	-std=c++11 -Wall -Wno-unused-variable -include /home/digi/code/c/riscv-qv/VTile.csrc/VTile.h \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
@@ -47,7 +47,7 @@ VM_USER_CLASSES = \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-	/home/digi/code/scala/1215merge/merge/cc \
+	/home/digi/code/c/riscv-qv/cc \
 
 
 ### Default rules...
@@ -59,13 +59,13 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
-mm.o: /home/digi/code/scala/1215merge/merge/cc/mm.cc
+mm.o: /home/digi/code/c/riscv-qv/cc/mm.cc
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-top_q.o: /home/digi/code/scala/1215merge/merge/cc/top_q.cc
+top_q.o: /home/digi/code/c/riscv-qv/cc/top_q.cc
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
-/home/digi/code/scala/1215merge/merge/QVTile: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
+/home/digi/code/c/riscv-qv/QVTile: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
 	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
 
 

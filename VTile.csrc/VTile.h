@@ -13,7 +13,6 @@
 
 class VTile__Syms;
 class VTile___024root;
-class VerilatedVcdC;
 
 // This class is the main interface to the Verilated model
 class VTile VL_NOT_FINAL : public VerilatedModel {
@@ -26,26 +25,26 @@ class VTile VL_NOT_FINAL : public VerilatedModel {
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
-    VL_IN8(&io_nasti_b_valid,0,0);
-    VL_OUT8(&io_nasti_w_bits_last,0,0);
-    VL_IN8(&reset,0,0);
-    VL_IN8(&io_nasti_r_bits_last,0,0);
-    VL_IN8(&io_host_fromhost_valid,0,0);
-    VL_IN(&io_host_fromhost_bits,31,0);
-    VL_OUT8(&io_nasti_ar_valid,0,0);
-    VL_IN8(&io_nasti_ar_ready,0,0);
-    VL_OUT8(&io_nasti_aw_valid,0,0);
-    VL_OUT(&io_nasti_ar_bits_addr,31,0);
-    VL_OUT(&io_host_tohost,31,0);
-    VL_OUT8(&io_nasti_b_ready,0,0);
-    VL_OUT8(&io_nasti_r_ready,0,0);
+    VL_OUT(&io_nasti_aw_bits_addr,31,0);
     VL_IN8(&io_nasti_aw_ready,0,0);
     VL_IN8(&io_nasti_w_ready,0,0);
     VL_OUT8(&io_nasti_w_valid,0,0);
     VL_OUT64(&io_nasti_w_bits_data,63,0);
-    VL_OUT(&io_nasti_aw_bits_addr,31,0);
+    VL_IN8(&io_nasti_r_bits_last,0,0);
+    VL_IN8(&io_host_fromhost_valid,0,0);
+    VL_IN(&io_host_fromhost_bits,31,0);
+    VL_OUT8(&io_nasti_b_ready,0,0);
+    VL_OUT8(&io_nasti_r_ready,0,0);
     VL_IN64(&io_nasti_r_bits_data,63,0);
+    VL_IN8(&io_nasti_b_valid,0,0);
+    VL_OUT8(&io_nasti_w_bits_last,0,0);
+    VL_IN8(&reset,0,0);
     VL_IN8(&io_nasti_r_valid,0,0);
+    VL_OUT8(&io_nasti_ar_valid,0,0);
+    VL_OUT(&io_nasti_ar_bits_addr,31,0);
+    VL_OUT(&io_host_tohost,31,0);
+    VL_IN8(&io_nasti_ar_ready,0,0);
+    VL_OUT8(&io_nasti_aw_valid,0,0);
     VL_IN8(&clock,0,0);
     VL_IN8(&io_nasti_b_bits_id,4,0);
     VL_IN8(&io_nasti_b_bits_resp,1,0);
@@ -104,8 +103,6 @@ class VTile VL_NOT_FINAL : public VerilatedModel {
     bool eventsPending();
     /// Returns time at next time slot. Aborts if !eventsPending()
     uint64_t nextTimeSlot();
-    /// Trace signals in the model; called by application code
-    void trace(VerilatedVcdC* tfp, int levels, int options = 0);
     /// Retrieve name of this model instance (as passed to constructor).
     const char* name() const;
 
@@ -113,7 +110,6 @@ class VTile VL_NOT_FINAL : public VerilatedModel {
     const char* hierName() const override final;
     const char* modelName() const override final;
     unsigned threads() const override final;
-    std::unique_ptr<VerilatedTraceConfig> traceConfig() const override final;
 } VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
 
 #endif  // guard

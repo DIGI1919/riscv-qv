@@ -1,0 +1,6 @@
+RETURN = 0  cycle =40 CODE = a
+RETURN = 1  cycle =2a CODE = 3
+RETURN = 2  cycle =31 INST = d
+RETURN = 3  cycle =34 OVER = ffffffff
+Simulation completed at time 7c (cycle 3e)
+TOHOST = ffffffff
