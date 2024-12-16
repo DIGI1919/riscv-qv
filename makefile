@@ -1,11 +1,10 @@
 BASE_DIR	= $(abspath .)
 nproc      = $(shell nproc)
 
-
 MAIN	= main
 logName ?= simLog
 
-
+# to run the benchmarks. you can try "make run-bmark bmark_hex=BmarkSrc/xx.hex to begin the squeezeNet bmarks"
 VTILE = $(BASE_DIR)/QVTile
 bmark_hex ?= $(BASE_DIR)/$(MAIN).hex 
 bmark_out = $(foreach f,$(bmark_hex),$(patsubst %.hex,%.vcd,$f))
@@ -14,6 +13,10 @@ $(bmark_out) : $(MAIN).hex $(BASE_DIR)/QVTile
 	$(VTILE) $< $@ 2> $(bmark_simLog)
 run-bmark:$(bmark_out)
 
+
+
+
+# use to make QVTile bin
 CXXFLAGS += -std=c++11 -Wall -Wno-unused-variable
 
 VERILATOR = verilator --cc --exe
